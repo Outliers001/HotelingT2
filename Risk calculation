@@ -1,0 +1,35 @@
+
+risk_a =function(df,I,w){ 
+  Rj=((I)/(df-(w/2)))
+  for (i in Rj) {
+    Ro= 1-cumprod(1-Rj)
+  }
+  result2 = data.frame(Desiese_free_pop = df, Incidence=I, Withdraws = w,Rj=Rj, Rto_tj=Ro)
+  result2
+}
+risk_d =function(df,I,w){
+  pt = (df-((I+w)/2))
+  idj = (I/pt)
+  Rj1 = 1-exp(-idj)
+  for (i in Rj1) {
+    R= 1-exp(-cumsum(idj))
+  }
+  result1 = data.frame(Desiese_free_pop = df, Incidence=I, Withdraws = w, Population_time = pt, IDj=idj, Rj=Rj1, Rto_tj=R)
+  result1
+}
+risk_d_c =function(df,I,w,t,dt){
+  pt = (df-w)*t
+  idj = (I/pt)
+  Rj1 = 1-exp(-idj*dt)
+  for (i in Rj) {
+    R= 1-exp(-cumsum(idj)*dt)
+  }
+  result3 = data.frame(Desiese_free_pop = df, Incidence=I, Withdraws = w, Population_time = pt, IDj=idj, Rj=Rj1, Rto_tj=R)
+  result3
+}
+
+
+risk_d(c(1000,731,551,447,372),c(214,117,57,30,16),c(55,63,47,45,38))
+risk_a(c(12,10,7,2,1),c(1,1,2,1,0),c(1,2,3,0,1))
+risk_d(c(12,10,7,2,1),c(1,1,2,1,0),c(1,2,3,0,1))
+risk_d_c(c(35000,50000,60000,55000),c(70,488,2182,4400),c(175,1220,5455,11000),t=2,dt=10)
